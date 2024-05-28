@@ -17,18 +17,18 @@ struct GridCoord: Hashable {
 }
 
 class GameModel : ObservableObject {
-    //TODO: Create two player interactions
-    
     //TODO: Create CheckMate
-
     @Published var isSelected : Bool
     @Published var boardViewModel : BoardViewModel
-    @Published var selected = 0
-    @Published var selectedPos = GridCoord(4,4)
+    @Published var selected : Int
+    @Published var selectedPos : GridCoord
+    @Published var isWhitesTrun : Bool = true
     
     init(whiteStart: Bool){
         isSelected = false
         boardViewModel = BoardViewModel(whiteStart: whiteStart)
+        selectedPos = GridCoord(4,4)
+        selected = 0
     }
     
     func selectTile(_ row: Int, _ column : Int){
@@ -45,5 +45,6 @@ class GameModel : ObservableObject {
         boardViewModel.board[currRow][currColumn] = 0
         isSelected = false
         boardViewModel.possibleMoves = []
+        isWhitesTrun = !isWhitesTrun
     }
 }

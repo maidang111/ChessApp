@@ -63,20 +63,26 @@ struct BoardView: View {
                 ForEach(0..<8, id: \.self) { i in
                     HStack(spacing: 0) {
                         ForEach(0..<8, id: \.self) { j in
-                            if gameModel.boardViewModel.board[i][j] != 0 {
+                            if (gameModel.boardViewModel.board[i][j] != 0 ) {
                                 Image(gameModel.boardViewModel.piecesDict[gameModel.boardViewModel.board[i][j]]!.getImageName())
                                     .resizable()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .aspectRatio(1, contentMode: .fit)
                                     .onTapGesture {
-                                        if (gameModel.selected == gameModel.boardViewModel.board[i][j] && gameModel.isSelected) {
-                                            gameModel.isSelected = false
+                                        if ((gameModel.boardViewModel.board[i][j] > 0 && gameModel.isWhitesTrun) || (gameModel.boardViewModel.board[i][j] < 0 && !gameModel.isWhitesTrun)){
+                                            if (gameModel.selected == gameModel.boardViewModel.board[i][j] && gameModel.isSelected) {
+                                                gameModel.isSelected = false
+                                            } else {
+                                                gameModel.isSelected = true
+                                                gameModel.selectedPos = GridCoord(i,j)
+                                            }
+                                            gameModel.selectTile(i,j)
+                                            gameModel.selected = gameModel.boardViewModel.board[i][j]
                                         } else {
-                                            gameModel.isSelected = true
-                                            gameModel.selectedPos = GridCoord(i,j)
+                                            if gameModel.boardViewModel.possibleMoves.contains(GridCoord(i,j)){
+                                                gameModel.moveToTile(gameModel.selectedPos.first, gameModel.selectedPos.second, i, j)
+                                            }
                                         }
-                                        gameModel.selectTile(i,j)
-                                        gameModel.selected = gameModel.boardViewModel.board[i][j]
                                     }
                             } else {
                                 Rectangle()

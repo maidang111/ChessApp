@@ -75,12 +75,12 @@ class Pawn: Piece{
             }
             
             // takes on the left
-            if ((col-1 >= 0) && (row+1 < 8) && (board[row+1][col-1] * board[row][col] < 0)){
+            if ( (row+1 < 8) && (col-1 >= 0) && (board[row+1][col-1] * board[row][col] < 0)){
                 possibleMoves.insert(GridCoord(row+1, col-1))
             }
             
             // takes on the right
-            if ((col+1 < 8) && (row+1 < 8) && (board[row+1][col-1] * board[row][col] < 0)){
+            if ((col+1 < 8) && (row+1 < 8) && (board[row+1][col+1] * board[row][col] < 0)){
                 possibleMoves.insert(GridCoord(row+1, col+1))
             }
         }
